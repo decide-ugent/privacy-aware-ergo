@@ -1,6 +1,6 @@
 # Privacy-Aware Ergonomic Analysis
 
-Official implementation for **"Enabling Privacy-Aware AI-Based Ergonomic Analysis"**.
+Official implementation for **"Enabling Privacy-Aware AI-Based Ergonomic Analysis"**. [Paper](https://www.sciencedirect.com/science/article/pii/S2212827125008182)
 
 This work presents a privacy-preserving approach to ergonomic analysis using AutoEncoder-based obfuscation that maintains pose estimation accuracy while protecting individual privacy.
 
@@ -72,3 +72,4 @@ author = {Sander {De Coninck} and Emilio Gamba and Bart {Van Doninck} and Abdell
 keywords = {Ergonomic Analysis, Privacy, Human Pose Estimation, Privacy-Aware Machine Learning},
 }
 ```
+
