@@ -1,47 +1,74 @@
-# Source code for the paper Enabling Privacy-Aware AI-Based Ergonomic Analysis
+# Privacy-Aware Ergonomic Analysis
 
-To be completed
+Official implementation for **"Enabling Privacy-Aware AI-Based Ergonomic Analysis"**.
 
-## Prepare dataset
+This work presents a privacy-preserving approach to ergonomic analysis using AutoEncoder-based obfuscation that maintains pose estimation accuracy while protecting individual privacy.
 
-The `train_obfuscator.py` script expects dataset in the yolo format (indicated by a .yaml file, more info on the [ultralytics documentation](https://docs.ultralytics.com/datasets/pose/#ultralytics-yolo-format)).
+## Installation
 
-For the dataset used in the paper, you can use the script `prepare_dataset.sh`. It expects the input data in the form of:
+```bash
+pip install -r requirements.txt
+```
 
-*   `input_folder/`
-    *   `train/`
-        *   `scene1/`
-            *   `vid1/`
-            *   `vid2/`
-            *   `vid3/`
-            *   `vid4/`
-        *   `scene2/`
-        *   `...`
-    *   `val/`
-        *   `...`
-    *   `test/`
-        *   `...`
+## Dataset Preparation
 
-Your config should look like this then:
+The training script expects datasets in YOLO pose format. Use `prepare_dataset.sh` to convert your data or create a YAML config file:
 
 ```yaml
-path: path_to_output_folder_given_in_script
+path: /path/to/your/dataset
 train: images/train
 val: images/val
 test: images/test
-
-kpt_shape: [17,3]
-
+kpt_shape: [17, 3]
 names:
   0: person
 ```
 
-## Train Obfuscator/Deobfuscator
+## Training
 
-To train an obfuscator/deobfuscator model, use the `train_obfuscator.py` file. This script expects a number of input arguments, use `python3 train_obfuscator.py --help` for more info.
-
-For a base variant you can use:
+Train the obfuscator/deobfuscator models:
 
 ```bash
-python3 train_obfuscator.py --config_path your_config_file_here --nowandb
+python train_obfuscator.py --config_path path/to/config.yaml --nowandb
+```
+
+Use `--help` to see all available options.
+
+## Evaluation
+
+Evaluate trained models:
+
+```bash
+python eval.py \
+    --config_path path/to/config.yaml \
+    --load_path_obfuscator models/obfuscator.pt \
+    --load_path_deobfuscator models/deobfuscator.pt
+```
+
+Compare with baseline methods:
+
+```bash
+# Gaussian blur
+python eval.py --obfuscation_type gaussian_blur --kernel_size 21
+
+# Noise injection  
+python eval.py --obfuscation_type noise --std 0.1
+```
+
+## Citation
+
+```bibtex
+@article{DECONINCK2025371,
+title = {Enabling Privacy-Aware AI-Based Ergonomic Analysis},
+journal = {Procedia CIRP},
+volume = {136},
+pages = {371-376},
+year = {2025},
+note = {35th CIRP Design 2025},
+issn = {2212-8271},
+doi = {https://doi.org/10.1016/j.procir.2025.08.065},
+url = {https://www.sciencedirect.com/science/article/pii/S2212827125008182},
+author = {Sander {De Coninck} and Emilio Gamba and Bart {Van Doninck} and Abdellatif Bey-Temsamani and Sam Leroux and Pieter Simoens},
+keywords = {Ergonomic Analysis, Privacy, Human Pose Estimation, Privacy-Aware Machine Learning},
+}
 ```
